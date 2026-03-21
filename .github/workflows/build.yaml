@@ -69,9 +69,6 @@ jobs:
           output: 'trivy-results.sarif' 
           severity: 'CRITICAL,HIGH'
 
-      # Commenting this out to show that if we were in a regular situation, not a fork, the best approach would be to
-      # generate a sarif file and upload it for posterity and audit purposes. Because this is a fork, I am having it
-      # report to the console.
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@38697555549f1db7851b81482ff19f1fa5c4fedc # v4.34.1
         with:
