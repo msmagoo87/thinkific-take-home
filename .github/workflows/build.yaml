@@ -66,7 +66,7 @@ jobs:
         with:
           image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:test-scan'
           format: 'sarif' # See the note below for an explanation of using this rather than sarif.
-          output: '0' # Don't fail the build, just report
+          output: 'trivy-results.sarif' 
           severity: 'CRITICAL,HIGH'
 
       # Commenting this out to show that if we were in a regular situation, not a fork, the best approach would be to
