@@ -121,6 +121,7 @@ The manifests can be saved in a `manifests` directory.
 - [X] Create an ingress or gateway for the hostname `dumbkv.example.com`, the service will be available on the root path, the cert-manager cluster issuer is named `letsencrypt`
 - [X] Update the kubernetes manifests to support the postgres backend
   - I made the assumption that a postgres service would be running in the cluster and there would be a secret provided with the connection string that this service could read
+  - Switched to rolling updates since we can with a postgres backend
 
 ## Monitoring
 - [ ] Create a service monitor objects for prometheus to scrape the metrics
