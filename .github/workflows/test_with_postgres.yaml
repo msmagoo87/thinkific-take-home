@@ -42,5 +42,4 @@ jobs:
           python-version-file: "pyproject.toml"
 
       - name: Run Pytest
-        run: uv run python -m pytest -v \
-            --database-location=postgres://postgres:postgres@localhost/postgres
+        run: uv run python -m pytest -v --database-location=postgres://postgres:postgres@localhost/postgres
