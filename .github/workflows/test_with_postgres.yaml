@@ -1,4 +1,4 @@
-name: Run Tests
+name: Run Tests with Postgres
 
 on:
   pull_request:
@@ -9,17 +9,21 @@ concurrency:
 jobs:
   test-postgres:
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres:16
+
         env:
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
+
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+          
         ports:
           - 5432:5432
 
