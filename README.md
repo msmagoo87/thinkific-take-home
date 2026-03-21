@@ -91,8 +91,16 @@ uv run python -m pytest -v --database-location=postgres://postgres:postgres@127.
 Feel free to check these boxes in your copy along the way. If you want to leave short notes about your changes you can add them to this list also.
 
 ## Build
-- [ ] Finish the dockerfile to run this project
-- [ ] Finish the github action to build the docker image (no need to push anywhere if you don't want to)
+- [X] Finish the dockerfile to run this project
+  - I updated the Dockerfile to use a stable LTS version of Ubuntu as 24.10 was EOL and causing 404 errors on `apt-get update`
+  - Also finished the Dockerfile to have it install dependencies and run the app on port 8000.
+  - Created a simple docker-compose file to allow local testing via simple `docker compose up --build` command. I just find that a bit more straight forward.
+- [X] Finish the github action to build the docker image (no need to push anywhere if you don't want to)
+  - Update workflow to build, scan, and push the docker image to GHCR.io
+  - Use publically available docker actions to setup dockerx, build the image, get helpful metadata, and push the image to GHCR
+  - Use Trivy to scan the image for any security vulnerabilities
+  - Use Git SHA's rather than tags for more secure use of public actions (tags can be overwritten, SHAs can not)
+  - Have the associated tag as a comment next to the SHA for tools like renovate or dependabot to use for keeping actions up-to-date
 
 ## Test
 - [ ] Create a github actions workflow that runs the tests on each pull_request
