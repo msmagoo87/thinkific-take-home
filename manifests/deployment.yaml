@@ -16,30 +16,57 @@ spec:
       labels:
         app: dumbkv
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001 
+      
       containers:
       - name: dumbkv
         image: ghcr.io/msmagoo87/thinkific-take-home:sha256-6213e456267cdea188a44dcc7d4a85c653b19a50d188dc1ab46345dae4051bf2
+        
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+
         ports:
         - containerPort: 8000
         envFrom:
         - configMapRef:
             name: dumbkv-config
-        # Health Checks
+        
         livenessProbe:
           httpGet:
             path: /
             port: 8000
           initialDelaySeconds: 5
-          periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /
             port: 8000
           initialDelaySeconds: 5
+
         volumeMounts:
         - name: storage
           mountPath: /dumbkvstore
+        - name: tmp-dir
+          mountPath: /tmp
+
       volumes:
       - name: storage
         persistentVolumeClaim:
           claimName: dumbkv-pvc
+      - name: tmp-dir
+        emptyDir: {}
