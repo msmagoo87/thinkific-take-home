@@ -15,9 +15,14 @@ services:
     build: .
     ports:
       - "8000:8000"
+    user: "10001:10001"
+    volumes:
+      - dumbkv-data:/dumbkvstore
     environment:
       DATABASE_TYPE: postgres
       DATABASE_LOCATION: postgres://postgres:postgres@postgres:5432/postgres
     depends_on:
       postgres:
         condition: service_healthy
+volumes:
+  dumbkv-data:
