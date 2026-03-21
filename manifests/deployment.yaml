@@ -43,9 +43,11 @@ spec:
 
         ports:
         - containerPort: 8000
-        envFrom:
-        - configMapRef:
-            name: dumbkv-config
+        env:
+          - name: DATABASE_TYPE
+            value: "sqlite"
+          - name: DATABASE_LOCATION
+            value: "/dumbkvstore/dumbkv.db"
         
         livenessProbe:
           httpGet:
