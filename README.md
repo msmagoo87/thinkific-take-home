@@ -103,8 +103,9 @@ Feel free to check these boxes in your copy along the way. If you want to leave 
   - Have the associated tag as a comment next to the SHA for tools like renovate or dependabot to use for keeping actions up-to-date
 
 ## Test
-- [ ] Create a github actions workflow that runs the tests on each pull_request
-- [ ] Create an additional test workflow that runs a postgres service and update the test config to use this postgres backend
+- [X] Create a github actions workflow that runs the tests on each pull_request
+  - Had to update the pyproject.toml to pin the python version explicitly to 3.12.* due to errors caused by the pinned version of psycopg causing errors in python 3.14.
+- [X] Create an additional test workflow that runs a postgres service and update the test config to use this postgres backend
 
 ## Create the kubernetes manifests to run this service
 
