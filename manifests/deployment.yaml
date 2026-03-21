@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dumbkv
+  labels:
+    app: dumbkv
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: dumbkv
+  template:
+    metadata:
+      labels:
+        app: dumbkv
+    spec:
+      containers:
+      - name: dumbkv
+        image: ghcr.io/msmagoo87/thinkific-take-home:sha256-6213e456267cdea188a44dcc7d4a85c653b19a50d188dc1ab46345dae4051bf2
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: dumbkv-config
+        # Health Checks
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 5
+        volumeMounts:
+        - name: storage
+          mountPath: /dumbkvstore
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: dumbkv-pvc
