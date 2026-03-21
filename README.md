@@ -101,6 +101,7 @@ Feel free to check these boxes in your copy along the way. If you want to leave 
   - Use Trivy to scan the image for any security vulnerabilities
   - Use Git SHA's rather than tags for more secure use of public actions (tags can be overwritten, SHAs can not)
   - Have the associated tag as a comment next to the SHA for tools like renovate or dependabot to use for keeping actions up-to-date
+  - If this were a real production scenario I'd worry about proper tagging of the image but for simplicity's sake I'm just using main.
 
 ## Test
 - [X] Create a github actions workflow that runs the tests on each pull_request
@@ -121,7 +122,7 @@ The manifests can be saved in a `manifests` directory.
 - [X] Create an ingress or gateway for the hostname `dumbkv.example.com`, the service will be available on the root path, the cert-manager cluster issuer is named `letsencrypt`
 - [X] Update the kubernetes manifests to support the postgres backend
   - I made the assumption that a postgres service would be running in the cluster and there would be a secret provided with the connection string that this service could read
-  - Switched to rolling updates since we can with a postgres backend
+  - Switched to rolling updates since we can accomplish this with a shared backend source (postgres)
 
 ## Monitoring
 - [ ] Create a service monitor objects for prometheus to scrape the metrics

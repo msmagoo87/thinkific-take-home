@@ -5,7 +5,8 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: efs
+  # storageClassName: efs
+  storageClassName: standard
   resources:
     requests:
       storage: 5Gi
