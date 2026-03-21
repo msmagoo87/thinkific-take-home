@@ -46,10 +46,9 @@ spec:
 
         ports:
         - containerPort: 8000
-        envFrom:
-        - configMapRef:
-            name: dumbkv-config
         env:
+        - name: DATABASE_TYPE
+          value: "postgres"
         - name: DATABASE_LOCATION
           valueFrom:
             secretKeyRef:
