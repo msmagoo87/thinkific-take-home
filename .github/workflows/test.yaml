@@ -1,0 +1,31 @@
+name: Run Tests
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@883057155b05f23b829027e4e138379436666872 # v5.3.0
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@0b9256587e59193d4067f99c21d5c1ee22495943 # v5.4.0
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Run Pytest
+        run: uv run python -m pytest
