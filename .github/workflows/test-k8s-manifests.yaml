@@ -1,4 +1,4 @@
-name: Run Tests
+name: Validate K8s Manfiests
 
 on:
   pull_request:
