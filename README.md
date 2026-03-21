@@ -112,10 +112,15 @@ Feel free to check these boxes in your copy along the way. If you want to leave 
 The manifests can be saved in a `manifests` directory.
 
 - [X] Create a deployment, including a health check, using the sqlite backend. We only need 1 replica, and we should prevent multiple instances from running
+  - For security reasons, I went back and updated the dockerfile with a non-root user and set the deployment to use that non-root user
+  - Added resource constraints to be more neighbourly
+  - Block priviledge escalation
+  - Only the KV volume is writable
 - [X] Create a service
 - [X] Create a PVC and ensure the database directory is named `dumbkvstore`. The storage class name is `efs`
 - [X] Create an ingress or gateway for the hostname `dumbkv.example.com`, the service will be available on the root path, the cert-manager cluster issuer is named `letsencrypt`
-- [ ] Update the kubernetes manifests to support the postgres backend
+- [X] Update the kubernetes manifests to support the postgres backend
+  - I made the assumption that a postgres service would be running in the cluster and there would be a secret provided with the connection string that this service could read
 
 ## Monitoring
 - [ ] Create a service monitor objects for prometheus to scrape the metrics

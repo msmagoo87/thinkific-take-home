@@ -3,5 +3,4 @@ kind: ConfigMap
 metadata:
   name: dumbkv-config
 data:
-  DATABASE_TYPE: "sqlite"
-  DATABASE_LOCATION: "/dumbkvstore/dumbkv.db"
+  DATABASE_TYPE: "postgres"
