@@ -3,7 +3,7 @@ name = "DumbKV"
 version = "0.1.0"
 description = "A really bad KV server, you shouldn't use this at all"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = "==3.12.*"
 dependencies = [
     "cryptography>=45.0.6",
     "fastapi>=0.116.0",
