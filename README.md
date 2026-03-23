@@ -2,6 +2,7 @@
 - All documentation is contained within the [docs](docs/) folder (SLOs and architecture diagram).
 - The [docker-compose](docker-compose.yml) was updated to include a proxy for HTTPS as well as to include prometheus and grafana for monitoring enhancements.
 - The required [nginx config](nginx.conf) is located at the base of the directory while self-signed certs are located in the [certs](certs/) directory.
+- Prometheus' [config file](prometheus.yml) is located at the base of the directory and mounted during `docker compose`.
 - To be a bit fancy and prevent errors if Grafana wasn't fully booted up and available by the time nginx was configured, I'm using a resolver to Docker's internal DNS and setting grafana's address to a variable. This makes Nginx skip the startup check so it only tries to find the IP once the first request comes in. I'm also making the nginx service depend on grafana, which likely could have fixed it as well, but why not do both.
 
 ### Date 
