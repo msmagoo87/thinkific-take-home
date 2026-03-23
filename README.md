@@ -34,3 +34,7 @@ There are nuances regarding Route53/DNS/routing I didn't get in to for a multi-t
 ### Other information about your submission that you feel it's important that we know if applicable.
 ### Your feedback on this technical challenge 
 I actually went in to the repo and started working off the README before realizing there was an attached document with entirely different instructions. It might be good to make it a bit more clear in the email that the provided git repo should be used but not the README in it.
+Another point of confusion were the submission instructions. It says:
+- The assignment should be delivered as a git repository. 
+- Submit the project as a ZIP file including a README using the template provided below. 
+This was a bit confusing, I'm assuming both? I'm going to provide a zipped version and a link to my fork of the repo, but it's not very clear.
