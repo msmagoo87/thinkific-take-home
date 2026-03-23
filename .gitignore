@@ -14,6 +14,3 @@ wheels/
 
 # Default database location
 dumbkv.db
-
-#ignore my local file for setting up my git env
-.git-local
