@@ -17,8 +17,8 @@ services:
   app:
     build: .
     restart: unless-stopped
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     user: "10001:10001"
     environment:
       DATABASE_TYPE: postgres
@@ -26,6 +26,25 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+
+  proxy:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - app
+      - grafana
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --no-check-certificate https://localhost/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s # Give Nginx a few seconds to parse config and start
 
   prometheus:
     image: prom/prometheus:v2.45.0
@@ -39,6 +58,10 @@ services:
 
   grafana:
     image: grafana/grafana:latest
+    environment:
+      - GF_SERVER_DOMAIN=localhost
+      - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
     ports:
       - "3001:3000"
     depends_on:

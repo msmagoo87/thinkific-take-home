@@ -1,113 +1,34 @@
-# Site Reliability Engineer Challenge
+## Notes 
+- All documentation is contained within the [docs](docs/) folder (SLOs and architecture diagram).
+- The [docker-compose](docker-compose.yml) was updated to include a proxy for HTTPS as well as to include prometheus and grafana for monitoring enhancements.
+- The required [nginx config](nginx.conf) is located at the base of the directory while self-signed certs are located in the [certs](certs/) directory.
 
-Welcome to the Site Reliability Engineer Challenge. Your task is to follow the Steps to Complete section below based on the code in this repository.
+### Date 
+March 23, 2026
 
-You should fork or clone this repository and publish to your own github account. This should be public if completing the github actions steps (you can make it private or remove after we have reviewed), or create a deploy key so we can clone the code if it is private.
+### Location of deployed application 
+Not available, must be ran locally via `docker compose up`
 
-If you are concerned that your current github account is linked to any current employment and you do not want this activity linked, then create a new github account.
+### Time spent 
+4 hours
 
-If you do not have a github account, you can still complete this with GitLab, Codeberg, a self hosted Gitea instance or others, however do be aware that Thinkific uses Github and you should be familar with it.
+### Assumptions made 
+- The document sent mentions a Rails application but I was linked to this project, which is a python application. I'm assuming this was a simple mistype and carried on as such.
+- Assumed the KV will be a smaller part of a larger whole, influencing some architectural decisions.
 
-You will supply to us after you are finished:
-- The repository URL
-- A deploykey if the repository is private
+### Shortcuts/Compromises made 
+Tying back to the assumption made, since I don't have the full context I made an assumption about the KV being a smaller part of a larger whole and so that lead my design choices. With the ability to ask some more clarifying questions regarding intention, cost expectations, what other applications that may already be running this may depend on or will use this, etc. I would cater my design to all those criteria. 
 
-The idea is that we should be able to see: commit history; Github actions runs; the contents of the repository.
-
-Notes:
-- You are not expected to understand python, bugs in the application are not what you are trying to solve here.
-- You don't have to complete everything, if you can't, at least leaving enough notes of next steps in a markdown document are helpful.
-- Don't worry! Just try it!
-- Nobody is perfect, if you have made mistakes and they show up in the commit history this looks better than a clean slate (but it is optional, feel free to fix your commit history if you like)
-- If you run out of github actions credits for running workflows don't feel the need to pay, just make a note or leave comments on how you would implement if you cannot test the changes.
-
-Things that aren't required but will be favourable:
-- Commit history (small, frequent commits are better than large commits)
-- Signed commits
-- Pushed image to GHCR with a github actions build pipeline
-- Build attestations for the docker image
-
-# DumbKV
-
-This is a KV server that you shouldn't use. It's only purpose is to create something that can be run. It doesn't store things well and doesn't do a lot of checks so it's very easy to DoS this. 
-
-Keys are sha265 hashed, so you if you forget your key you will have to guess what it is again. The values are encrypted with the hashed key values.
-
-# Running
-
-Install uv by following https://docs.astral.sh/uv/getting-started/installation/
-
-Install python 3.12
-```
-uv python install 3.12
-```
-
-Install dependencies:
-```
-uv sync
-```
-
-Create an `.env` file. by default using the sqlite storage:
-```
-DATABASE_LOCATION=dumbkv.db
-DATABASE_TYPE=sqlite
-```
-
-Start server:
-```
-uv run uvicorn main:api --host 0.0.0.0 --port 8000 --log-config logging.yaml
-```
-
-Then load the basic UI at http://127.0.0.1:8000/ or open the swagger docs at http://127.0.0.1:8000/docs
-
-# Postgres storage
-
-To use the optional postgres storage, start a new postgres instance:
-```
-docker run -it --rm -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres
-```
-
-Then in your `.env` file set:
-```
-DATABASE_LOCATION=postgres://postgres:postgres@localhost/postgres
-DATABASE_TYPE=postgres
-```
-
-# Running tests
-
-Run pytest with:
-```
-uv run python -m pytest
-```
-
-By default this will use the an in memory sqlite backend. To test with postgres start pytest with the `--database-location` argument:
-```
-uv run python -m pytest -v --database-location=postgres://postgres:postgres@127.0.0.1/postgres
-```
+### Stretch goals attempted 
+- Since my original design was already open to multi-tenancy, it wasn't much extra effort to elaborate on how I'd expand this to be multi-tenancy.
 
 
-# Steps to complete
+### Instructions to run assignment locally 
+Should be a simple matter of running `docker compose up --build`
 
-Feel free to check these boxes in your copy along the way. If you want to leave short notes about your changes you can add them to this list also.
+### What did you not include in your solution that you want us to know about? 
+There are nuances regarding Route53/DNS/routing I didn't get in to for a multi-tenancy strategy. Thing such as subdomains vs. pathed routing, an ingress gateway vs. an ALB per application.
 
-## Build
-- [ ] Finish the dockerfile to run this project
-- [ ] Finish the github action to build the docker image (no need to push anywhere if you don't want to)
-
-## Test
-- [ ] Create a github actions workflow that runs the tests on each pull_request
-- [ ] Create an additional test workflow that runs a postgres service and update the test config to use this postgres backend
-
-## Create the kubernetes manifests to run this service
-
-The manifests can be saved in a `manifests` directory.
-
-- [ ] Create a deployment, including a health check, using the sqlite backend. We only need 1 replica, and we should prevent multiple instances from running
-- [ ] Create a service
-- [ ] Create a PVC and ensure the database directory is named `dumbkvstore`. The storage class name is `efs`
-- [ ] Create an ingress or gateway for the hostname `dumbkv.example.com`, the service will be available on the root path, the cert-manager cluster issuer is named `letsencrypt`
-- [ ] Update the kubernetes manifests to support the postgres backend
-
-## Monitoring
-- [ ] Create a service monitor objects for prometheus to scrape the metrics
-- [ ] Create a markdown document describing what SLO you would set for this application
+### Other information about your submission that you feel it's important that we know if applicable.
+### Your feedback on this technical challenge 
+I actually went in to the repo and started working off the README before realizing there was an attached document with entirely different instructions. It might be good to make it a bit more clear in the email that the provided git repo should be used but not the README in it.
