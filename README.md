@@ -2,6 +2,7 @@
 - All documentation is contained within the [docs](docs/) folder (SLOs and architecture diagram).
 - The [docker-compose](docker-compose.yml) was updated to include a proxy for HTTPS as well as to include prometheus and grafana for monitoring enhancements.
 - The required [nginx config](nginx.conf) is located at the base of the directory while self-signed certs are located in the [certs](certs/) directory.
+- To be a bit fancy and prevent errors if Grafana wasn't fully booted up and available by the time nginx was configured, I'm using a resolver to Docker's internal DNS and setting grafana's address to a variable. This makes Nginx skip the startup check so it only tries to find the IP once the first request comes in. I'm also making the nginx service depend on grafana, which likely could have fixed it as well, but why not do both.
 
 ### Date 
 March 23, 2026
@@ -24,7 +25,7 @@ Tying back to the assumption made, since I don't have the full context I made an
 - Included a roll-out plan for the basic single-tenancy model, not considering any multi-tenancy or external dependencies.
 
 ### Instructions to run assignment locally 
-Should be a simple matter of running `docker compose up --build`
+Simply run `docker compose up --build` and then visit https://localhost in your browser. 
 
 ### What did you not include in your solution that you want us to know about? 
 There are nuances regarding Route53/DNS/routing I didn't get in to for a multi-tenancy strategy. Thing such as subdomains vs. pathed routing, an ingress gateway vs. an ALB per application.
