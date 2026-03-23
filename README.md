@@ -6,7 +6,7 @@
 - To be a bit fancy and prevent errors if Grafana wasn't fully booted up and available by the time nginx was configured, I'm using a resolver to Docker's internal DNS and setting grafana's address to a variable. This makes Nginx skip the startup check so it only tries to find the IP once the first request comes in. I'm also making the nginx service depend on grafana, which likely could have fixed it as well, but why not do both.
 
 ### Date 
-March 23, 2026
+March 22, 2026
 
 ### Location of deployed application 
 Not available, must be ran locally via `docker compose up`
