@@ -10,7 +10,7 @@ March 23, 2026
 Not available, must be ran locally via `docker compose up`
 
 ### Time spent 
-4 hours
+5 hours
 
 ### Assumptions made 
 - The document sent mentions a Rails application but I was linked to this project, which is a python application. I'm assuming this was a simple mistype and carried on as such.
@@ -21,7 +21,7 @@ Tying back to the assumption made, since I don't have the full context I made an
 
 ### Stretch goals attempted 
 - Since my original design was already open to multi-tenancy, it wasn't much extra effort to elaborate on how I'd expand this to be multi-tenancy.
-
+- Included a roll-out plan for the basic single-tenancy model, not considering any multi-tenancy or external dependencies.
 
 ### Instructions to run assignment locally 
 Should be a simple matter of running `docker compose up --build`
